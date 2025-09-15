@@ -13,8 +13,10 @@ class EmailListController extends Controller
      */
     public function index()
     {
+        $search = request()->query('search');
+
         $emailLists = EmailList::all();
-        return view('emailList.index', ['emailLists' => $emailLists]);
+        return view('emailList.index', ['emailLists' => $emailLists, 'search' => $search]);
     }
 
     /**
