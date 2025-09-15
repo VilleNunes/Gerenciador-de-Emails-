@@ -6,18 +6,18 @@
     </x-slot>
 
     <x-card>
-       <x-form post>
+    <x-form :action="route('emailList.create')" post enctype="multipart/form-data">
         <div>
-            <x-input-label for="name" :value="__('Title')" />
+            <x-input-label for="title" :value="__('Title')" />
 
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+            <x-text-input id="title" class="block mt-1 w-full" type="text" name="title" :value="old('title')" required autofocus />
 
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <x-input-error :messages="$errors->get('title')" class="mt-2" />
         </div>
          <div>
             <x-input-label for="file" :value="__('Email List')" />
 
-            <x-text-input id="file" type='file' class="block mt-1 p-2 w-full"   :value="old('file')" required autofocus />
+            <x-text-input id="file" type='file' accept=".csv" class="block mt-1 p-2 w-full" name="file"  :value="old('file')" required autofocus />
 
             <x-input-error :messages="$errors->get('file')" class="mt-2" />
         </div>

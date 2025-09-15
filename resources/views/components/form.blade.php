@@ -5,5 +5,6 @@
 @endphp
 
 <form {{  $attributes->merge(['class' => 'space-y-6']) }} method="{{ $method }}" >
+    @csrf
     {{ $slot }}
 </form>

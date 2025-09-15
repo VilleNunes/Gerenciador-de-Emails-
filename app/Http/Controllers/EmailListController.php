@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EmailList;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EmailListController extends Controller
 {
@@ -13,7 +14,7 @@ class EmailListController extends Controller
     public function index()
     {
         $emailLists = EmailList::all();
-        return view('emailList.index',['emailLists'=>$emailLists]);
+        return view('emailList.index', ['emailLists' => $emailLists]);
     }
 
     /**
@@ -29,7 +30,49 @@ class EmailListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'file' => 'required|file|mimes:csv'
+        ]);
+
+        $pathList = $request->file('file')->getRealPath();
+
+
+        DB::transaction(function () use($request,$pathList){
+            $emailList = EmailList::create([
+                'title' => $request->title
+            ]);
+
+            $items = $this->readListEmailFromCsv($pathList);
+
+            $emailList->subscribers()->createMany($items);
+        });
+
+
+        return to_route('emailList.index')->with('success', 'Email List created successfully.');
+    }
+
+    public function readListEmailFromCsv($pathList)
+    {
+
+        $fileHandler = fopen($pathList, 'r');
+
+        $items = [];
+
+        while (($line = fgetcsv($fileHandler, null, ',')) !== false) {
+            if ($line[0] === 'nome' && $line[1] === "email") {
+                continue;
+            }
+
+            $items[] = [
+                'name' => $line[0],
+                'email' => $line[1]
+            ];
+        }
+
+        fclose($fileHandler);
+
+        return $items;
     }
 
     /**

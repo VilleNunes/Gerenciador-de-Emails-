@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('email_lists', function (Blueprint $table) {
+        Schema::create('subscribers', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->required();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->unsignedBigInteger('email_list_id');
+            $table->foreign('email_list_id')->references('id')->on('email_lists')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('email_lists');
+        Schema::dropIfExists('subscribers');
     }
 };

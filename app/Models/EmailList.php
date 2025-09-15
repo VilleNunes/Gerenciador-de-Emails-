@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmailList extends Model
 {
-    //
+    protected $fillable = ['title'];
+
+    public function subscribers()
+    {
+        return $this->hasMany(Subscriber::class);
+    }
 }
