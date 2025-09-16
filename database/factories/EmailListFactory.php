@@ -3,12 +3,13 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use App\Models\EmailList;
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Subscriber>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\EmailList>
  */
-class SubscriberFactory extends Factory
+class EmailListFactory extends Factory
 {
+    protected $model = EmailList::class;
     /**
      * Define the model's default state.
      *
@@ -17,8 +18,7 @@ class SubscriberFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=>fake()->word(),
-            'email'=>fake()->email()
+            'title'=>fake()->word()
         ];
     }
 }

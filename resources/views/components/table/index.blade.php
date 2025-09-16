@@ -12,14 +12,10 @@
         </thead>
         <tbody class="divide-y divide-neutral-300 dark:divide-neutral-700">
 
-            @foreach ($items as $item)
-            <tr class="even:bg-black/5 dark:even:bg-white/10">
-                <td class="p-4">{{ $item->id }}</td>
-                <td class="p-4">{{$item->title}}</td>
-                <td class="p-4">alice.brown@penguinui.com</td>
-                <td class="p-4"></td>
-            </tr>
-            @endforeach
+            <x-slot:table-body>
+                {{ $slot }}
+            </x-slot:table-body>
+
         </tbody>
     </table>
 </div>
