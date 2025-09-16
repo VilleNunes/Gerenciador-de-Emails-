@@ -16,22 +16,22 @@
                     :value="$search" required autofocus />
             </x-form>
         </div>
-        <x-table :headers="['id','name','count','acoes']" :items="$emailLists" />
-        <x-slot name="body">
-            @foreach ($emailLists as $emailList)
-            <tr class="even:bg-black/5 dark:even:bg-white/10">
-                <td class="p-4">{{ $emailList->id }}</td>
-                <td class="p-4">{{ $emailList->title }}</td>
-                <td class="p-4">{{ $emailList->subscribers_count }}</td>
-                <td class="p-4">
-                    <x-nav-link :href="route('emailList.show', $emailList)">
-                        {{ __('View') }}
-                    </x-nav-link>
-                </td>
-            </tr>
-            @endforeach
-        </x-slot>        
-        <x-table/>
+        <x-table :headers="['ID','Name','#Subscribers','Actions']" :items="$emailLists" >
+            <x-slot name="body">
+                @foreach ($emailLists as $emailList)
+                    <tr class="even:bg-black/5 dark:even:bg-white/10">
+                        <td class="p-4">{{ $emailList->id }}</td>
+                        <td class="p-4">{{ $emailList->title }}</td>
+                        <td class="p-4">{{ $emailList->subscribers_count }}</td>
+                        <td class="p-4">
+                            <x-nav-link :href="route('subscribers.index', $emailList)">
+                                {{ __('View Subscribers') }}
+                            </x-nav-link>
+                        </td>
+                    </tr>
+                @endforeach
+            </x-slot>        
+        </x-table>
         @else
         <div class="flex items-center justify-center">
             <x-nav-link :href="route('emailList.create')">
