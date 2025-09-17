@@ -69,6 +69,8 @@ class SubscriberController extends Controller
      */
     public function destroy(Subscriber $subscriber)
     {
-        //
+        $subscriber->delete();
+
+        return back()->with('success',__('subscriber successfully deleted'));
     }
 }
